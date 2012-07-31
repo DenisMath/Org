@@ -1,0 +1,34 @@
+* Бибилиотеки линейной алгебры
+refblas
+    Официальная эталонная реализация из netlib. Доступны версии на C и Fortran 77.[1]
+
+Accelerate
+Фреймворк от Apple для Mac OS X, включающий оптимизированные версии BLAS и LAPACK для процессоров PowerPC и Intel Core.[2]
+ACML
+    Основная математическая библиотека AMD (англ. AMD Core Math Library), поддерживающая процессоры AMD Athlon и Opteron под Linux и Windows.[3]
+ATLAS
+    Самооптимизирующийся программный пакет линейной алгебры (англ. Automatically Tuned Linear Algebra Software), реализация интерфейса BLAS с открытым исходным кодом для C и Fortran 77.[4]
+CUDA SDK
+    NVIDIA CUDA SDK включает функциональность BLAS (cuBLAS) для написания программ на C для видеокарт серии GeForce 8, GeForce 200, GeForce 300 (Fermi).
+ESSL
+    Библиотека инженерных и научных подпрограмм (англ. Engineering and Scientific Subroutine Library) от IBM, поддерживающая архитектуру PowerPC под AIX и Linux.[5]
+libflame
+    Реализация библиотеки линейной алгебры, включающей BLAS, проектом FLAME.[6]
+Goto BLAS
+    Реализация BLAS от Kazushige Goto.[7]
+HP MLIB
+    Математическая библиотека от HP, поддерживающая архитектуры IA-64, PA-RISC, x86 и Opteron под HP-UX и Linux.
+Intel MKL
+    Основная математическая библиотека Intel (англ. Intel Math Kernel Library), поддерживающая процессоры Intel под Linux, Windows и Mac OS X.[8]
+MathKeisan
+    Математическая библиотека от NEC, поддерживающая архитектуру NEC SX под SUPER-UX, и Itanium под Linux.[9]
+PDLIB/SX
+    Математическая библиотека, находящаяся в общественном достоянии (англ. Public Domain Mathematical Library), от NEC для системы NEC SX-4.[10]
+SCSL
+    Программная библиотека для научных вычислений (англ. Scientific Computing Software Library) от SGI содержит реализации BLAS и LAPACK для рабочих станций SGI Irix.
+Sun Performance Linaray
+    Sun Performance Library содержит оптимизированные BLAS и LAPACK для архитектур SPARC и AMD64 под Solaris 8, 9, и 10.
+uBLAS
+    Библиотека шаблонных классов C++, обеспечивающая функциональность BLAS. Часть библиотеки Boost. В отличие от других реализаций uBLAS фокусируется больше на правильности алгоритмов, используя продвинутые возможности C++, чем на высокой производительности.[11]
+GSL
+    Научная библиотека GNU (англ. GNU Scientific Library) содержит кроссплатформенную неоптимизированную реализацию на C, которая распространяется под GNU GPL.[12] 

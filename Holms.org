@@ -1,0 +1,20 @@
+* IP kontakt
+** 194.44.142.10
+General IP Information
+IP:	194.44.142.10
+Decimal:	3257699850
+Hostname:	proxy.ukma.kiev.ua
+ISP:	State Enterprise Scientific and Telecommunication
+Organization:	Information Computer Center
+Services:	Suspected proxy server
+Type:	Broadband
+Assignment:	Static IP
+Blacklist:	
+Geolocation Information
+Country:	Ukraine ua flag
+State/Region:	Kyyiv
+City:	Kiev
+Latitude:	50.4333
+Longitude:	30.5167
+13 Марта 2015 13.30 17.52
+** 95.158.0.240
