@@ -1,0 +1,150 @@
+Основные моменты.
+* 1. Классы
+Весь код находится внутри классов, которые подчиняются строгой иерархии. Кто чей папа должно быть строго указано :) У нового создаваемого .fla файла можно прописать имя главного класса, который запускается самым первым. Попробуем создать флешку выводящую "Hello world"
+Жмем Ctrl-N, в самом низу интерфейса Flash есть строчка Document class.
+
+Пишем туда main.test1 это будет наш root, здесь все, что разделено точками название папок, в нашем случае папка main, если будет написано examples.ex1.Simple то этот класс следует искать в папке examples и подпапке ex1. Последним идет имя класса. Напишем сам скрипт:
+package main {
+	import flash.display.Sprite;
+
+	public class test1 extends Sprite {
+		public function test1() {
+			trace("Hello World");
+		}
+	}
+}
+Сохраняем в файл test1.as в папку main.
+Компилируем, любуемся текстом в Output. Мелочь, а приятно :)
+В объявлен cxии класса нужно указывать область видимости, от кого наследуется и т.п. Полный формат:
+[dynamic] [public | internal] [final] class className [ extends superClass ] [ implements interfaceName[, interfaceName... ] ] { 
+	// class definition here
+}
+* 2. Слои
+Забываем про то, что такое номер слоя и как с ними мучались в AS2, при динамическом создании объектов приходилось помнить, какой мувик на каком слое, и не дай бог, приаттачить два мувика на один слой… Забыли :) Теперь для добавления нового визуального объекта к существующему нужно вызвать функцию addChild (см. так же addChildAt, removeChild, removeChildAt). Объекты располагаются друг над другом в порядке добавления.
+Добавим в наш скрипт вывод текста на экран.
+package main {
+	import flash.display.Sprite;
+	import flash.text.TextField;
+
+	public class test1 extends Sprite {
+		public function test1() {
+			trace("Hello World");
+			var txt:TextField = new TextField();
+			txt.text = "Hello World!";
+			addChild(txt);
+		}
+	}
+}
+Добавился новый import, приходится все время указывать в import все, что мы используем в своем проекте, иначе компилятор ругается на несуществующий класс (почему бы ему самому не искать в дефолтных imports?). Ладно, смотрим… текст есть.
+(см. examples\test1.swf)
+
+* 3. Рисование
+Если необходимо внутри мувика что-то нарисовать (прямоугольник и т.п.) необходимо подключить класс 
+import flash.display.Graphics;
+и рисовать на graphics (этот класс присутствует во всех визуальных объектах). Например, нарисуем красный круг с черной рамкой.
+package main {
+	import flash.display.Sprite;
+	import flash.text.TextField;
+	import flash.display.Graphics;
+
+	public class test1 extends Sprite {
+		public function test1() {
+			graphics.lineStyle(1, 0x000000);
+			graphics.beginFill(0xFF0000);
+			graphics.drawCircle(100, 100, 50);
+		}
+	}
+}
+Да, да, да! Теперь можно рисовать круги, вызывая одну функцию, не изобретая извращения с выводом 8-ми кривых координаты которым приходилось высчитывать через синус-тангенс… пример, просто для общего развития
+function drawCircle(mc:MovieClip, x:Number, y:Number, r:Number):Void {
+  mc.moveTo(x+r, y);
+  mc.curveTo(r+x, Math.tan(Math.PI/8)*r+y, Math.sin(Math.PI/4)*r+x, Math.sin(Math.PI/4)*r+y);
+  mc.curveTo(Math.tan(Math.PI/8)*r+x, r+y, x, r+y);
+  mc.curveTo(-Math.tan(Math.PI/8)*r+x, r+y, -Math.sin(Math.PI/4)*r+x, Math.sin(Math.PI/4)*r+y);
+  mc.curveTo(-r+x, Math.tan(Math.PI/8)*r+y, -r+x, y);
+  mc.curveTo(-r+x, -Math.tan(Math.PI/8)*r+y, -Math.sin(Math.PI/4)*r+x, -Math.sin(Math.PI/4)*r+y);
+  mc.curveTo(-Math.tan(Math.PI/8)*r+x, -r+y, x, -r+y);
+  mc.curveTo(Math.tan(Math.PI/8)*r+x, -r+y, Math.sin(Math.PI/4)*r+x, -Math.sin(Math.PI/4)*r+y);
+  mc.curveTo(r+x, -Math.tan(Math.PI/8)*r+y, r+x, y);
+}
+* 4. Events
+Забываем про 
+mc.onPress=function() {
+	бла-бла-бла
+}
+Теперь все построено на событиях. Для того чтобы отловить клик мышки по объекту необходимо добавить свою функцию, как реагирующую на событие "click":
+addEventListener("click", mouseDownHandler);
+...
+function mouseDownHandler(){
+}
+Разные классы генерируют разные события, какие именно нужно читать документацию, например события в классе MovieClip
+http://livedocs.macromedia.com/flex/2/langref/flash/display/MovieClip.html#eventSummary
+Появилась возможность реагировать на даблклик. Для теста попробуем создать кнопку, исчезающую по двойному клику. Создаем новую флешку (Ctrl-N), рисуем кнопку, превращаем ее в MovieClip (выделить, кликнуть правой кнопкой мыши «Convert to symbol»), в Linkage созданного мувика указываем название класса main.myButton
+Создаем файл myButton.as в папке main с таким текстом
+package main {
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+
+	public class myButton extends MovieClip {
+		public function myButton() {
+			doubleClickEnabled=true;
+			addEventListener(MouseEvent.DOUBLE_CLICK, onDblClick);
+		}
+		private function onDblClick(evt:MouseEvent):void {
+			trace("onDblClick");
+			visible=false;
+		}
+	}
+}
+
+Во-первых, надо подключить классы Event и MouseEvent. Во-вторых, в документации узнаем, что для того чтобы работал даблклик надо его разрешить doubleClickEnabled, по умолчанию равно false и такое событие не генерится. В-третьих, свойства _visible у мувиклипа больше нет, теперь это visible.
+(см. examples\test2.swf)
+
+* 5. Типы переменных
+Объявляя переменную теперь обязательно указывать ее тип 
+var myNum:Number;
+И это правильно, т.к. приучает к порядку и спасает от многих глупых ошибок. Остается возможность указать переменную произвольного типа
+var myVar:*;
+Но необходимости в этом я пока не вижу.
+У функции обязательно указывать тип возвращаемых данных, и если она ничего не возвращает, то указываем void (с маленькой буквы)
+function myFunction():void {
+}
+Обязательно указывать какие аргументы получает функция, и какого типа. Если необходимо вызывать функцию, передавая ей не все переменные, то необязательным аргументам нужно присвоить дефолтные значения через знак равно. Например:
+function CheckArguments(i:Number, s:String="def"):void {
+	trace("i="+i+", s="+s);
+}
+CheckArguments();		// такой вызов функции генерит ошибку при компиляции
+CheckArguments(1);		// i=1, s=def
+CheckArguments(2, "test");	// i=2, s=test
+Если нужно будет вызывать функцию с любым количеством аргументов, то пишем три точки и название массива, в который и будут записаны все передаваемые аргументы. Например:
+function CheckArguments2(s:String, ... ar):void {
+	trace("s="+s+", ar="+ar);
+}
+CheckArguments2("test", 1,7,"check");	// s=test, ar=1,7,check
+ar в данном случае является массивом. Для примера, функция, которая подменяет в строке ‘%s’ на передаваемые аргументы:
+// Подставляет вместо %s переданные аргументы
+function SearchReplace(s:String, ...arguments):String {
+	var tmp:Array = s.split("%s");
+	var i:Number = tmp.length;
+	if (i-->1) {
+		while (i-->0) tmp[i] += arguments[i];
+	}
+	return tmp.join("");
+}
+
+var str:String = SearchReplace("Использовать %s на персонажа '%s'", "Магический камень", "Стоун");
+trace(str); // Использовать Магический камень на персонажа 'Стоун'
+Появился новый удобный оператор for each для перебора всех значений в массиве или объекте:
+var ar:Array=[1,5,78,32,9];
+for each (var i:Number in ar) {
+	trace(i);
+}
+Результатом будет:
+1
+5
+78
+32
+9
+
+
